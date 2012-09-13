@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="net.bioclipse.smartcyp_feature"
+      label="Smartcyp"
+      version="0.2.0.qualifier"
+      provider-name="bioclipse.net"
+      plugin="net.bioclipse.smartcyp">
+
+   <description>
+      Smartcyp (http://www.farma.ku.dk/smartcyp/) integration in Bioclipse.
+P. Rydberg, D. E. Gloriam, J. Zaretzki, C. Breneman and L. Olsen, ACS Med. Chem. Lett., 2010, 1, 96-100 , 
+P. Rydberg, D. E. Gloriam and L. Olsen, Bioinformatics, 2010, 26, 2988-2989, 
+P. Rydberg and L. Olsen, ACS Med. Chem. Lett., 2012, 3, 69-73, and 
+P. Rydberg and L. Olsen, ChemMedChem, 2012, DOI:10.1002/cmdc.201200160
+   </description>
+
+   <copyright>
+      (C) Copyright 2012, individual bioclipse contributors.
+   </copyright>
+
+   <license url="">
+      Eclipse Public License (EPL).
+SmartCyp is Gnu Lessser General Public License (LGPL).
+   </license>
+
+   <plugin
+         id="net.bioclipse.smartcyp"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="javax.vecmath"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

@@ -1,0 +1,36 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Smartcyp
+Bundle-SymbolicName: net.bioclipse.smartcyp; singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: net.bioclipse.smartcyp.Activator
+Bundle-Vendor: bioclipse.net
+Export-Package: net.bioclipse.smartcyp, net.bioclipse.smartcyp.business
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ net.bioclipse.core,
+ net.bioclipse.scripting,
+ org.springframework.bundle.spring.aop,
+ net.sf.cglib,
+ org.springframework.osgi.aopalliance.osgi,
+ org.openscience.cdk.standard,
+ org.openscience.cdk.io,
+ org.openscience.cdk.interfaces,
+ org.openscience.cdk.data,
+ org.openscience.cdk.core,
+ org.openscience.cdk.smiles,
+ org.openscience.cdk.valencycheck,
+ org.openscience.cdk.render,
+ org.openscience.cdk.renderawt,
+ org.openscience.cdk.renderbasic,
+ org.openscience.cdk.rendercontrol,
+ org.openscience.cdk.structgen,
+ org.openscience.cdk.extra,
+ org.openscience.cdk.sdg,
+ org.openscience.cdk.smarts,
+ org.openscience.cdk.renderextra,
+ net.bioclipse.cdk.business
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: javax.vecmath,
+ org.apache.log4j
+Bundle-ActivationPolicy: lazy
