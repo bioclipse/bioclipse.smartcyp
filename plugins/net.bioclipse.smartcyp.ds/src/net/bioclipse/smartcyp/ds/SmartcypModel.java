@@ -6,8 +6,6 @@ import java.util.List;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.openscience.cdk.interfaces.IAtom;
 
-import smartcyp.MoleculeKU.SMARTCYP_PROPERTY;
-
 import net.bioclipse.cdk.domain.ICDKMolecule;
 import net.bioclipse.ds.model.AbstractDSTest;
 import net.bioclipse.ds.model.IDSTest;
