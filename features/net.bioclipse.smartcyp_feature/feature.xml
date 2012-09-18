@@ -37,4 +37,11 @@ SmartCyp is Gnu Lessser General Public License (LGPL).
          version="0.0.0"
          unpack="false"/>
 
+   <plugin
+         id="net.bioclipse.smartcyp.ds"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
 </feature>

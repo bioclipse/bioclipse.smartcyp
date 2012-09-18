@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="net.bioclipse.decisionsupport">
+
+         <endpoint
+               id="net.bioclipse.ds.som"
+               description="Prediction of atoms most likely to be metabolized by CYPs"
+               icon="icons/smartcyp-icon-16.png"
+               name="Site-of-metabolism">
+         </endpoint>
+         
+         <test 
+            id="som.smartcyp"
+            name="Smartcyp"
+            class="net.bioclipse.smartcyp.ds.SmartcypModel"
+            endpoint="net.bioclipse.ds.som">
+        </test>
+         
+   </extension>
+   
+   <extension
+       point="net.bioclipse.cdk.jchempaint.generator">
+    <generator
+          class="net.bioclipse.smartcyp.ds.SmartcypGenerator">
+    </generator>
+ </extension>
+   
+
+</plugin>
