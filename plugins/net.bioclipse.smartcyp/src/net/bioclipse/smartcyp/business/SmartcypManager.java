@@ -25,6 +25,7 @@ import javax.imageio.ImageIO;
 
 import net.bioclipse.cdk.business.Activator;
 import net.bioclipse.cdk.business.ICDKManager;
+import net.bioclipse.cdk.domain.CDKMolecule;
 import net.bioclipse.cdk.domain.ICDKMolecule;
 import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.core.domain.IMolecule;
@@ -71,7 +72,7 @@ public class SmartcypManager implements IBioclipseManager {
         return "smartcyp";
     }
     
-    public void predictSOM(IMolecule mol) throws BioclipseException, CloneNotSupportedException, CDKException {
+    public ICDKMolecule predictSOM(IMolecule mol) throws BioclipseException, CloneNotSupportedException, CDKException {
     	
     	ICDKManager cdk = Activator.getDefault().getJavaCDKManager();
     	
@@ -108,7 +109,27 @@ public class SmartcypManager implements IBioclipseManager {
 		moleculeKU.rankAtoms2D6();
 		moleculeKU.sortAtoms2C9();
 		moleculeKU.rankAtoms2C9();
+		
+		//Debug out properties
+//		System.out.println("SmartCyp properties per atom: ");
+//		for(IAtom atom : moleculeKU.atoms() ){
+//			System.out.println("Atom: " + moleculeKU.getAtomNumber(atom) +" has Ranking: " + SMARTCYP_PROPERTY.Ranking.get(atom));
+//			for (Object prop : atom.getProperties().keySet()){
+//				String key = (String) prop;
+//				Object val = atom.getProperties().get(prop);
+//				System.out.println("    " + key + " -- " + val);
+//			}
+//		}
 
+//		for(IAtom atom : moleculeKU.getAtomsSortedByEnA() ){
+//			System.out.println("Sorted atom: " + moleculeKU.getAtomNumber(atom));
+//				Object val = atom.getProperty("Score");
+//				System.out.println("    Score:" + val);
+//		}
+
+		return new CDKMolecule(moleculeKU);
+		
+/*
 		System.out.println("Atom,Ranking,Score,Energy,Relative Span,2D6ranking,2D6score,Span2End,N+Dist,2C9ranking,2C9score,COODist");
 		DecimalFormat twoDecimalFormat = new DecimalFormat("#.##");
 
@@ -193,7 +214,7 @@ public class SmartcypManager implements IBioclipseManager {
 		generators.add(new RingGenerator());
 		generators.add(new BasicAtomGenerator());
 		this.paintAndWriteMolecule(renderer, ac, "heteroAtoms2C9", OutputDir);
-
+*/
 	}
     
 	public void paintAndWriteMolecule(AtomContainerRenderer renderer, IAtomContainer iAtomContainer, String nameBase, String outputdir){

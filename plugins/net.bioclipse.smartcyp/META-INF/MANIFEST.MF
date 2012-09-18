@@ -5,7 +5,8 @@ Bundle-SymbolicName: net.bioclipse.smartcyp; singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: net.bioclipse.smartcyp.Activator
 Bundle-Vendor: bioclipse.net
-Export-Package: net.bioclipse.smartcyp, net.bioclipse.smartcyp.business
+Export-Package: net.bioclipse.smartcyp,
+ net.bioclipse.smartcyp.business
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  net.bioclipse.core,

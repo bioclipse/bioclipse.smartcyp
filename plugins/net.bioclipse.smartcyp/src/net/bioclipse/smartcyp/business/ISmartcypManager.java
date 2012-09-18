@@ -12,6 +12,7 @@ package net.bioclipse.smartcyp.business;
 
 import org.openscience.cdk.exception.CDKException;
 
+import net.bioclipse.cdk.domain.ICDKMolecule;
 import net.bioclipse.core.PublishedClass;
 import net.bioclipse.core.PublishedMethod;
 import net.bioclipse.core.Recorded;
@@ -31,6 +32,6 @@ public interface ISmartcypManager extends IBioclipseManager {
         methodSummary=
             "Predict Site-Of-Metabolism for a molecule using SmartCyp."
     )
-    public void predictSOM(IMolecule mol) throws BioclipseException, CloneNotSupportedException, CDKException;
+    public ICDKMolecule predictSOM(IMolecule mol) throws BioclipseException, CloneNotSupportedException, CDKException;
 	
 }
