@@ -33,6 +33,7 @@ import java.util.TreeSet;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.invariant.EquivalentClassPartitioner;
@@ -42,8 +43,9 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 
-public class MoleculeKU extends AtomContainer implements IMolecule {
+public class MoleculeKU extends Molecule{
 
+	
 	public enum SMARTCYP_PROPERTY {
 		SymmetryNumber,
 		IsSymmetric,
