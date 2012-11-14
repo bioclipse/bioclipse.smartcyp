@@ -23,6 +23,10 @@ P. Rydberg and L. Olsen, ChemMedChem, 2012, DOI:10.1002/cmdc.201200160
 SmartCyp is Gnu Lessser General Public License (LGPL).
    </license>
 
+   <includes
+         id="net.bioclipse.ds_feature"
+         version="0.0.0"/>
+
    <plugin
          id="net.bioclipse.smartcyp"
          download-size="0"
