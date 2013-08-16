@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Smartcyp
 Bundle-SymbolicName: net.bioclipse.smartcyp; singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 1.0.1.qualifier
 Bundle-Activator: net.bioclipse.smartcyp.Activator
 Bundle-Vendor: bioclipse.net
 Export-Package: net.bioclipse.smartcyp,
@@ -17,7 +17,6 @@ Require-Bundle: org.eclipse.ui,
  org.openscience.cdk.standard,
  org.openscience.cdk.io,
  org.openscience.cdk.interfaces,
- org.openscience.cdk.data,
  org.openscience.cdk.core,
  org.openscience.cdk.smiles,
  org.openscience.cdk.valencycheck,
@@ -30,7 +29,8 @@ Require-Bundle: org.eclipse.ui,
  org.openscience.cdk.sdg,
  org.openscience.cdk.smarts,
  org.openscience.cdk.renderextra,
- net.bioclipse.cdk.business
+ net.bioclipse.cdk.business,
+ org.openscience.cdk.silent
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: javax.vecmath,
  org.apache.log4j
