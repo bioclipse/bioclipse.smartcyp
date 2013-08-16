@@ -38,17 +38,18 @@ import java.util.Iterator;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.MoleculeSet;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.geometry.Projector;
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
+
 import smartcyp.MoleculeKU.SMARTCYP_PROPERTY;
 
 
@@ -57,7 +58,7 @@ public class WriteResultsAsChemDoodleHTML {
 
 
 	PrintWriter outfile;
-	TreeSet<Atom> sortedAtomsTreeSet;
+    TreeSet<IAtom> sortedAtomsTreeSet;
 	String moleculeID;
 	private String dateAndTime;
 	String[] namesOfInfiles;
@@ -82,9 +83,9 @@ public class WriteResultsAsChemDoodleHTML {
 	}
 
 	
-	public void writeHTML(MoleculeSet moleculeSet) {
+    public void writeHTML( IMoleculeSet moleculeSet ) {
 		
-		if (OutputFile=="") OutputFile = "SMARTCyp_Results_" + this.dateAndTime;
+		if (OutputFile.isEmpty()) OutputFile = "SMARTCyp_Results_" + this.dateAndTime;
 
 		try {
 			outfile = new PrintWriter(new BufferedWriter(new FileWriter(this.OutputDir + OutputFile + ".html")));
@@ -102,7 +103,7 @@ public class WriteResultsAsChemDoodleHTML {
 	}
 
 
-	public void writeHead(MoleculeSet moleculeSet){
+    public void writeHead( IMoleculeSet moleculeSet ) {
 
 		outfile.println("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">");
 		outfile.println("");
@@ -223,7 +224,7 @@ public class WriteResultsAsChemDoodleHTML {
 
 	}
 
-	public void writeBody(MoleculeSet moleculeSet){
+    public void writeBody( IMoleculeSet moleculeSet ) {
 
 		outfile.println("<body>");
 		//error message if problems
@@ -412,9 +413,11 @@ public class WriteResultsAsChemDoodleHTML {
 		outfile.println("<tr><th>Rank</th><th>Atom</th><th>Score</th><th>Energy</th><th>S2End</th><th>N+Dist</th></tr>");
 
 		// Iterate over the Atoms in this sortedAtomsTreeSet
-		sortedAtomsTreeSet = (TreeSet<Atom>) moleculeKU.getAtomsSortedByEnA2D6();
-		Iterator<Atom> sortedAtomsTreeSetIterator2D6 = sortedAtomsTreeSet.iterator();
-		Atom currentAtom2D6;
+        sortedAtomsTreeSet = (TreeSet<IAtom>) moleculeKU
+                        .getAtomsSortedByEnA2D6();
+        Iterator<IAtom> sortedAtomsTreeSetIterator2D6 = sortedAtomsTreeSet
+                        .iterator();
+        IAtom currentAtom2D6;
 		
 		while(sortedAtomsTreeSetIterator2D6.hasNext()){
 			currentAtom2D6 = sortedAtomsTreeSetIterator2D6.next();
@@ -547,9 +550,11 @@ public class WriteResultsAsChemDoodleHTML {
 		outfile.println("<tr><th>Rank</th><th>Atom</th><th>Score</th><th>Energy</th><th>S2End</th><th>COODist</th></tr>");
 
 		// Iterate over the Atoms in this sortedAtomsTreeSet
-		sortedAtomsTreeSet = (TreeSet<Atom>) moleculeKU.getAtomsSortedByEnA2C9();
-		Iterator<Atom> sortedAtomsTreeSetIterator2C9 = sortedAtomsTreeSet.iterator();
-		Atom currentAtom2C9;
+        sortedAtomsTreeSet = (TreeSet<IAtom>) moleculeKU
+                        .getAtomsSortedByEnA2C9();
+        Iterator<IAtom> sortedAtomsTreeSetIterator2C9 = sortedAtomsTreeSet
+                        .iterator();
+        IAtom currentAtom2C9;
 		
 		while(sortedAtomsTreeSetIterator2C9.hasNext()){
 			currentAtom2C9 = sortedAtomsTreeSetIterator2C9.next();
@@ -681,9 +686,10 @@ public class WriteResultsAsChemDoodleHTML {
 		outfile.println("<tr><th>Rank</th><th>Atom</th><th>Score</th><th>Energy</th><th>Accessibility</th></tr>");
 
 		// Iterate over the Atoms in this sortedAtomsTreeSet
-		sortedAtomsTreeSet = (TreeSet<Atom>) moleculeKU.getAtomsSortedByEnA();
-		Iterator<Atom> sortedAtomsTreeSetIterator = sortedAtomsTreeSet.iterator();
-		Atom currentAtom;
+        sortedAtomsTreeSet = (TreeSet<IAtom>) moleculeKU.getAtomsSortedByEnA();
+        Iterator<IAtom> sortedAtomsTreeSetIterator = sortedAtomsTreeSet
+                        .iterator();
+        IAtom currentAtom;
 		
 		while(sortedAtomsTreeSetIterator.hasNext()){
 			currentAtom = sortedAtomsTreeSetIterator.next();
@@ -699,7 +705,7 @@ public class WriteResultsAsChemDoodleHTML {
 		outfile.println("<hr />");
 	}
 
-	public void writeAtomRowinMoleculeKUTable(Atom atom){
+    public void writeAtomRowinMoleculeKUTable( IAtom atom ) {
 
 		if(SMARTCYP_PROPERTY.Ranking.get(atom).intValue() == 1) outfile.println("<tr class=\"highlight1\">");
 		else if(SMARTCYP_PROPERTY.Ranking.get(atom).intValue() == 2) outfile.println("<tr class=\"highlight2\">");
@@ -716,7 +722,7 @@ public class WriteResultsAsChemDoodleHTML {
 		outfile.println("</tr>");
 	}
 
-	public void writeAtomRowinMoleculeKUTable2D6(Atom atom){
+    public void writeAtomRowinMoleculeKUTable2D6( IAtom atom ) {
 
 		if(SMARTCYP_PROPERTY.Ranking2D6.get(atom).intValue() == 1) outfile.println("<tr class=\"highlight1\">");
 		else if(SMARTCYP_PROPERTY.Ranking2D6.get(atom).intValue() == 2) outfile.println("<tr class=\"highlight2\">");
@@ -735,7 +741,7 @@ public class WriteResultsAsChemDoodleHTML {
 		outfile.println("</tr>");
 	}
 	
-	public void writeAtomRowinMoleculeKUTable2C9(Atom atom){
+    public void writeAtomRowinMoleculeKUTable2C9( IAtom atom ) {
 
 		if(SMARTCYP_PROPERTY.Ranking2C9.get(atom).intValue() == 1) outfile.println("<tr class=\"highlight1\">");
 		else if(SMARTCYP_PROPERTY.Ranking2C9.get(atom).intValue() == 2) outfile.println("<tr class=\"highlight2\">");
@@ -772,7 +778,8 @@ public MoleculeKU generate2Dcoordinates(MoleculeKU iAtomContainer){
 	else
 	{
 		// Generate 2D structure diagram (for each connected component).
-		final AtomContainer iAtomContainer2d = new AtomContainer();	
+            final IAtomContainer iAtomContainer2d = SilentChemObjectBuilder
+                            .getInstance().newInstance( IAtomContainer.class );
 
 		synchronized (structureDiagramGenerator)
 		{

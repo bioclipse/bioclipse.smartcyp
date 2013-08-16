@@ -31,16 +31,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.invariant.EquivalentClassPartitioner;
 import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.silent.Molecule;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 
 public class MoleculeKU extends Molecule{
@@ -136,11 +133,14 @@ public class MoleculeKU extends Molecule{
 	// Local variables
 	private static final long serialVersionUID = 1L;	
 	AtomComparator atomComparator = new AtomComparator();
-	private TreeSet<Atom> atomsSortedByEnA = new TreeSet<Atom>(atomComparator);
+    private TreeSet<IAtom>    atomsSortedByEnA      = new TreeSet<IAtom>(
+                                                        atomComparator );
 	AtomComparator2D6 atomComparator2D6 = new AtomComparator2D6();
-	private TreeSet<Atom> atomsSortedByEnA2D6 = new TreeSet<Atom>(atomComparator2D6);
+    private TreeSet<IAtom>    atomsSortedByEnA2D6   = new TreeSet<IAtom>(
+                                                        atomComparator2D6 );
 	AtomComparator2C9 atomComparator2C9 = new AtomComparator2C9();
-	private TreeSet<Atom> atomsSortedByEnA2C9 = new TreeSet<Atom>(atomComparator2C9);
+    private TreeSet<IAtom>    atomsSortedByEnA2C9   = new TreeSet<IAtom>(
+                                                        atomComparator2C9 );
 	private int HighestSymmetryNumber = 0;
 
 
@@ -187,7 +187,9 @@ public class MoleculeKU extends Molecule{
 
 					numberOfSMARTSmatches = querytool.countMatches();		// Count the number of matches				
 					List<List<Integer>> matchingAtomsIndicesList_1;				// List of List objects each containing the indices of the atoms in the target molecule
-					List<Integer> matchingAtomsIndicesList_2 = null;						// List of atom indices
+                    List<Integer> matchingAtomsIndicesList_2 = null; // List of
+                                                                     // IAtom
+                                                                     // indices
 					double energy = SMARTSnEnergiesTable.get(currentSMARTS);		// Energy of currentSMARTS
 
 					//					System.out.println("\n The SMARTS " + currentSMARTS + " has " + numberOfSMARTSmatches + " matches in the molecule " + this.getID());
@@ -204,13 +206,14 @@ public class MoleculeKU extends Molecule{
 
 						// Set the Energies of the atoms
 						int indexOfMatchingAtom;
-						Atom matchingAtom;
+                        IAtom matchingAtom;
 						for (int atomNr = 0; atomNr < matchingAtomsIndicesList_2.size(); atomNr++){								// Contains 1 atom
 							indexOfMatchingAtom = matchingAtomsIndicesList_2.get(atomNr);
 
 							// An atom can be matched by several SMARTS and thus assigned several energies
 							// The if clause assures that atoms will get the lowest possible energy
-							matchingAtom = (Atom) this.getAtom(indexOfMatchingAtom);
+                            matchingAtom = (IAtom) this
+                                            .getAtom( indexOfMatchingAtom );
 
 							if(SMARTCYP_PROPERTY.Energy.get(matchingAtom) == null 
 									|| energy < SMARTCYP_PROPERTY.Energy.get(matchingAtom).doubleValue())
@@ -457,8 +460,8 @@ public class MoleculeKU extends Molecule{
 						int[][] minTopDistMatrix = PathTools.computeFloydAPSP(adjacencyMatrix);
 						//iterate over all atoms
 						for (int refAtomNr=0; refAtomNr < this.getAtomCount(); refAtomNr++){
-							Atom refAtom;
-							refAtom = (Atom) this.getAtom(refAtomNr);
+                            IAtom refAtom;
+                            refAtom = (IAtom) this.getAtom( refAtomNr );
 							int thisdist2protamine;
 							thisdist2protamine = minTopDistMatrix[refAtomNr][indexOfMatchingAtom];
 							if(SMARTCYP_PROPERTY.Dist2ProtAmine.get(refAtom) != null){
@@ -527,8 +530,8 @@ public class MoleculeKU extends Molecule{
 						int[][] minTopDistMatrix = PathTools.computeFloydAPSP(adjacencyMatrix);
 						//iterate over all atoms
 						for (int refAtomNr=0; refAtomNr < this.getAtomCount(); refAtomNr++){
-							Atom refAtom;
-							refAtom = (Atom) this.getAtom(refAtomNr);
+                            IAtom refAtom;
+                            refAtom = (IAtom) this.getAtom( refAtomNr );
 							int thisdist2carboxylicacid;
 							thisdist2carboxylicacid = minTopDistMatrix[refAtomNr][indexOfMatchingAtom];
 							if(SMARTCYP_PROPERTY.Dist2CarboxylicAcid.get(refAtom) != null){
@@ -548,7 +551,7 @@ public class MoleculeKU extends Molecule{
 	//  This method makes atomsSortedByEnA
 	public void sortAtoms() throws CDKException{
 
-		Atom currentAtom;
+        IAtom currentAtom;
 		String currentAtomType;					// Atom symbol i.e. C, H, N, P or S
 
 		// The Symmetry Numbers are needed to compare the atoms (Atom class and the compareTo method) before adding them below
@@ -557,7 +560,7 @@ public class MoleculeKU extends Molecule{
 
 		for (int atomNr = 0; atomNr < this.getAtomCount(); atomNr++){
 
-			currentAtom = (Atom) this.getAtom(atomNr);
+            currentAtom = (IAtom) this.getAtom( atomNr );
 			int currentSymmetryNumber = SMARTCYP_PROPERTY.SymmetryNumber.get(currentAtom).intValue();
 
 			// Match atom symbol
@@ -573,7 +576,7 @@ public class MoleculeKU extends Molecule{
 	
 	public void sortAtoms2D6() throws CDKException{
 
-		Atom currentAtom;
+        IAtom currentAtom;
 		String currentAtomType;					// Atom symbol i.e. C, H, N, P or S
 
 		// The Symmetry Numbers are needed to compare the atoms (Atom class and the compareTo method) before adding them below
@@ -582,7 +585,7 @@ public class MoleculeKU extends Molecule{
  
 		for (int atomNr = 0; atomNr < this.getAtomCount(); atomNr++){
 
-			currentAtom = (Atom) this.getAtom(atomNr);
+            currentAtom = (IAtom) this.getAtom( atomNr );
 			int currentSymmetryNumber = SMARTCYP_PROPERTY.SymmetryNumber.get(currentAtom).intValue();
 
 			// Match atom symbol
@@ -598,7 +601,7 @@ public class MoleculeKU extends Molecule{
 
 	public void sortAtoms2C9() throws CDKException{
 
-		Atom currentAtom;
+        IAtom currentAtom;
 		String currentAtomType;					// Atom symbol i.e. C, H, N, P or S
 
 		// The Symmetry Numbers are needed to compare the atoms (Atom class and the compareTo method) before adding them below
@@ -607,7 +610,7 @@ public class MoleculeKU extends Molecule{
  
 		for (int atomNr = 0; atomNr < this.getAtomCount(); atomNr++){
 
-			currentAtom = (Atom) this.getAtom(atomNr);
+            currentAtom = (IAtom) this.getAtom( atomNr );
 			int currentSymmetryNumber = SMARTCYP_PROPERTY.SymmetryNumber.get(currentAtom).intValue();
 
 			// Match atom symbol
@@ -623,20 +626,21 @@ public class MoleculeKU extends Molecule{
 
 	// Symmetric atoms have identical values in the array from getTopoEquivClassbyHuXu
 	public void setSymmetryNumbers() throws CDKException{
-		Atom atom;
+
+        IAtom atom;
 		//set charges so that they are not null
 		for(int atomIndex = 0; atomIndex < this.getAtomCount(); atomIndex++){
-			atom = (Atom) this.getAtom(atomIndex);
+            atom = (IAtom) this.getAtom( atomIndex );
 			atom.setCharge((double) atom.getFormalCharge());
 		}
 		//compute symmetry
-		EquivalentClassPartitioner symmtest = new EquivalentClassPartitioner((AtomContainer) this);
-		int[] symmetryNumbersArray = symmtest.getTopoEquivClassbyHuXu((AtomContainer) this);
+		EquivalentClassPartitioner symmtest = new EquivalentClassPartitioner((IAtomContainer) this);
+		int[] symmetryNumbersArray = symmtest.getTopoEquivClassbyHuXu((IAtomContainer) this);
 		symmetryNumbersArray[0]=0;//so we can count the number of symmetric sites for each atom without double counting for the ones with the highest symmetrynumber
 		int symmsites;
 		for(int atomIndex = 0; atomIndex < this.getAtomCount(); atomIndex++){
 			symmsites = 0;
-			atom = (Atom) this.getAtom(atomIndex);
+            atom = (IAtom) this.getAtom( atomIndex );
 			SMARTCYP_PROPERTY.SymmetryNumber.set(atom,symmetryNumbersArray[atomIndex+1]);
 			// Compute how many symmetric sites the atom has, 1=only itself
 			symmsites = FindInArray(symmetryNumbersArray,symmetryNumbersArray[atomIndex+1]);
@@ -654,9 +658,10 @@ public class MoleculeKU extends Molecule{
 		// Iterate over the Atoms in this sortedAtomsTreeSet
 		int rankNr = 1;
 		int loopNr = 1;
-		Atom previousAtom = null;
-		Atom currentAtom;
-		Iterator<Atom> atomsSortedByEnAiterator = this.getAtomsSortedByEnA().iterator();
+        IAtom previousAtom = null;
+        IAtom currentAtom;
+        Iterator<IAtom> atomsSortedByEnAiterator = this.getAtomsSortedByEnA()
+                        .iterator();
 		while(atomsSortedByEnAiterator.hasNext()){
 
 			currentAtom = atomsSortedByEnAiterator.next();
@@ -687,9 +692,10 @@ public class MoleculeKU extends Molecule{
 		// Iterate over the Atoms in this sortedAtomsTreeSet
 		int rankNr = 1;
 		int loopNr = 1;
-		Atom previousAtom = null;
-		Atom currentAtom;
-		Iterator<Atom> atomsSortedByEnAiterator = this.getAtomsSortedByEnA2D6().iterator();
+        IAtom previousAtom = null;
+        IAtom currentAtom;
+        Iterator<IAtom> atomsSortedByEnAiterator = this
+                        .getAtomsSortedByEnA2D6().iterator();
 		while(atomsSortedByEnAiterator.hasNext()){
 
 			currentAtom = atomsSortedByEnAiterator.next();
@@ -720,9 +726,10 @@ public class MoleculeKU extends Molecule{
 		// Iterate over the Atoms in this sortedAtomsTreeSet
 		int rankNr = 1;
 		int loopNr = 1;
-		Atom previousAtom = null;
-		Atom currentAtom;
-		Iterator<Atom> atomsSortedByEnAiterator = this.getAtomsSortedByEnA2C9().iterator();
+        IAtom previousAtom = null;
+        IAtom currentAtom;
+        Iterator<IAtom> atomsSortedByEnAiterator = this
+                        .getAtomsSortedByEnA2C9().iterator();
 		while(atomsSortedByEnAiterator.hasNext()){
 
 			currentAtom = atomsSortedByEnAiterator.next();
@@ -750,12 +757,12 @@ public class MoleculeKU extends Molecule{
 	// This method makes the ranking of symmetric atoms
 	public void rankSymmetricAtoms() throws CDKException{
 
-		Atom currentAtom;
+        IAtom currentAtom;
 		String currentAtomType;					// Atom symbol i.e. C, H, N, P or S
 
 		for (int atomNr = 0; atomNr < this.getAtomCount(); atomNr++){
 
-			currentAtom = (Atom) this.getAtom(atomNr);
+            currentAtom = (IAtom) this.getAtom( atomNr );
 
 			// Match atom symbol
 			currentAtomType = currentAtom.getSymbol();
@@ -766,8 +773,9 @@ public class MoleculeKU extends Molecule{
 
 					// AtomsSortedByEnA contains the ranked atoms
 					// We just need to find the symmetric atom and use its ranking for the unranked symmetric atom
-					Iterator<Atom> atomsSortedByEnAiterator = this.getAtomsSortedByEnA().iterator();
-					Atom rankedAtom;
+                    Iterator<IAtom> atomsSortedByEnAiterator = this
+                                    .getAtomsSortedByEnA().iterator();
+                    IAtom rankedAtom;
 					Number rankNr;
 					while(atomsSortedByEnAiterator.hasNext()){
 
@@ -791,12 +799,12 @@ public class MoleculeKU extends Molecule{
 	// This method makes the ranking of symmetric atoms
 	public void rankSymmetricAtoms2D6() throws CDKException{
 
-		Atom currentAtom;
+        IAtom currentAtom;
 		String currentAtomType;					// Atom symbol i.e. C, H, N, P or S
 
 		for (int atomNr = 0; atomNr < this.getAtomCount(); atomNr++){
 
-			currentAtom = (Atom) this.getAtom(atomNr);
+            currentAtom = (IAtom) this.getAtom( atomNr );
 
 			// Match atom symbol
 			currentAtomType = currentAtom.getSymbol();
@@ -807,8 +815,9 @@ public class MoleculeKU extends Molecule{
 
 					// AtomsSortedByEnA contains the ranked atoms
 					// We just need to find the symmetric atom and use its ranking for the unranked symmetric atom
-					Iterator<Atom> atomsSortedByEnAiterator = this.getAtomsSortedByEnA2D6().iterator();
-					Atom rankedAtom;
+                    Iterator<IAtom> atomsSortedByEnAiterator = this
+                                    .getAtomsSortedByEnA2D6().iterator();
+                    IAtom rankedAtom;
 					Number rankNr;
 					while(atomsSortedByEnAiterator.hasNext()){
 
@@ -832,12 +841,12 @@ public class MoleculeKU extends Molecule{
 	// This method makes the ranking of symmetric atoms
 	public void rankSymmetricAtoms2C9() throws CDKException{
 
-		Atom currentAtom;
+        IAtom currentAtom;
 		String currentAtomType;					// Atom symbol i.e. C, H, N, P or S
 
 		for (int atomNr = 0; atomNr < this.getAtomCount(); atomNr++){
 
-			currentAtom = (Atom) this.getAtom(atomNr);
+            currentAtom = (IAtom) this.getAtom( atomNr );
 
 			// Match atom symbol
 			currentAtomType = currentAtom.getSymbol();
@@ -848,8 +857,9 @@ public class MoleculeKU extends Molecule{
 
 					// AtomsSortedByEnA contains the ranked atoms
 					// We just need to find the symmetric atom and use its ranking for the unranked symmetric atom
-					Iterator<Atom> atomsSortedByEnAiterator = this.getAtomsSortedByEnA2C9().iterator();
-					Atom rankedAtom;
+                    Iterator<IAtom> atomsSortedByEnAiterator = this
+                                    .getAtomsSortedByEnA2C9().iterator();
+                    IAtom rankedAtom;
 					Number rankNr;
 					while(atomsSortedByEnAiterator.hasNext()){
 
@@ -871,15 +881,15 @@ public class MoleculeKU extends Molecule{
 	}	
 
 	// Get the TreeSet containing the sorted C, N, P and S atoms
-	public TreeSet<Atom> getAtomsSortedByEnA(){
+    public TreeSet<IAtom> getAtomsSortedByEnA() {
 		return this.atomsSortedByEnA;
 	}
 
-	public TreeSet<Atom> getAtomsSortedByEnA2D6(){
+    public TreeSet<IAtom> getAtomsSortedByEnA2D6() {
 		return this.atomsSortedByEnA2D6;
 	}
 
-	public TreeSet<Atom> getAtomsSortedByEnA2C9(){
+    public TreeSet<IAtom> getAtomsSortedByEnA2C9() {
 		return this.atomsSortedByEnA2C9;
 	}
 	

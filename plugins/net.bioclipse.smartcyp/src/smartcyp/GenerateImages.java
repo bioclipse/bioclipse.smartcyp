@@ -41,10 +41,8 @@ import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.geometry.Projector;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.MoleculeSet;
 
 import org.openscience.cdk.renderer.AtomContainerRenderer;
 import org.openscience.cdk.renderer.font.AWTFontManager;
@@ -54,6 +52,7 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.RingGenerator;
 import org.openscience.cdk.renderer.visitor.AWTDrawVisitor;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 
 // This class writes the results to a HTML file
@@ -80,12 +79,13 @@ public class GenerateImages {
 
 
 	// This is the "main" method that calls all other methods below
-	public void generateAndWriteImages(MoleculeSet moleculeSet) throws CloneNotSupportedException, CDKException{
+	public void generateAndWriteImages(IMoleculeSet moleculeSet) throws CloneNotSupportedException, CDKException{
 
 
 
 		if(moleculeSet == null){
 			System.out.println("moleculeSet is null");
+            return;
 		}
 
 		//Renderer renderer;
@@ -164,7 +164,8 @@ public class GenerateImages {
 	public static IAtomContainer generate2Dcoordinates(IAtomContainer iAtomContainer){ 
 
 
-		IMolecule molecule = new Molecule(iAtomContainer);
+        IMolecule molecule = SilentChemObjectBuilder.getInstance()
+                        .newInstance( IMolecule.class, iAtomContainer );
 
 
 		//		boolean isConnected = ConnectivityChecker.isConnected(iAtomContainer);
@@ -182,7 +183,8 @@ public class GenerateImages {
 		{
 
 			// Generate 2D structure diagram (for each connected component).
-			final IAtomContainer iAtomContainer2d = new AtomContainer();	
+            final IAtomContainer iAtomContainer2d = SilentChemObjectBuilder
+                            .getInstance().newInstance( IAtomContainer.class );
 
 			/*
 			final IMoleculeSet som = ConnectivityChecker.partitionIntoMolecules(iAtomContainer);

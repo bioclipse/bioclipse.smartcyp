@@ -38,18 +38,18 @@ import java.util.List;
 import java.lang.System;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.SMILESReader;
 import org.openscience.cdk.io.ReaderFactory;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.DeduceBondSystemTool;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -143,7 +143,7 @@ public class SMARTCyp {
 		
 		// Read in structures/molecules
 		System.out.println("\n ************** Reading molecule structures **************");
-		MoleculeSet moleculeSet = SMARTCyp.readInStructures(filenames, SMARTSnEnergiesTable.getSMARTSnEnergiesTable());
+		IMoleculeSet moleculeSet = SMARTCyp.readInStructures(filenames, SMARTSnEnergiesTable.getSMARTSnEnergiesTable());
 
 		MoleculeKU moleculeKU;
 		for(int moleculeIndex = 0; moleculeIndex < moleculeSet.getMoleculeCount(); moleculeIndex++){
@@ -230,13 +230,17 @@ public class SMARTCyp {
 
 	// Reads the molecule infiles
 	// Stores MoleculeKUs and AtomKUs
-	public static MoleculeSet readInStructures(String[] inFileNames, HashMap<String, Double> SMARTSnEnergiesTable) throws CloneNotSupportedException, CDKException{
+    public static IMoleculeSet readInStructures( String[] inFileNames,
+                                                 HashMap<String, Double> SMARTSnEnergiesTable )
+                                                                                               throws CloneNotSupportedException,
+                                                                                               CDKException {
 
-		MoleculeSet moleculeSet = new MoleculeSet();
+        IMoleculeSet moleculeSet = SilentChemObjectBuilder.getInstance()
+                        .newInstance( IMoleculeSet.class );
 
 
 		List<IAtomContainer> moleculeList;
-		IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 		ISimpleChemObjectReader reader;
 
 		File inputFile;
@@ -284,7 +288,7 @@ public class SMARTCyp {
 				MoleculeKU moleculeKU;
 				IAtomContainer iAtomContainerTmp;		
 				IAtomContainer iAtomContainer;	
-				CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance());
+				CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(SilentChemObjectBuilder.getInstance());
 				for(int atomContainerNr = 0; atomContainerNr < moleculeList.size() ; atomContainerNr++){				
 					iAtomContainerTmp = moleculeList.get(atomContainerNr);	
 					
@@ -308,7 +312,7 @@ public class SMARTCyp {
 						moleculeSet.addMolecule(moleculeKU);
 						moleculeKU.setID(Integer.toString(highestMoleculeID));
 						//set the molecule title in the moleculeKU object
-						if (iAtomContainer.getProperty("SMIdbNAME")!="" && iAtomContainer.getProperty("SMIdbNAME")!=null) {
+						if (iAtomContainer.getProperty("SMIdbNAME").equals( "" ) && iAtomContainer.getProperty("SMIdbNAME")!=null) {
 							iAtomContainer.setProperty(CDKConstants.TITLE, iAtomContainer.getProperty("SMIdbNAME"));
 						}
 						moleculeKU.setProperty(CDKConstants.TITLE, iAtomContainer.getProperty(CDKConstants.TITLE));
