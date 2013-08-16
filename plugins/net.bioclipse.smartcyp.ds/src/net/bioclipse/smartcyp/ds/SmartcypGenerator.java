@@ -19,7 +19,6 @@ import java.util.Map;
 import net.bioclipse.ds.Activator;
 import net.bioclipse.ds.DSConstants;
 import net.bioclipse.ds.DSPrefs;
-import net.bioclipse.ds.model.result.PosNegIncColorGenerator.AtomMap;
 
 import org.apache.log4j.Logger;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -29,11 +28,8 @@ import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.OvalElement;
-import org.openscience.cdk.renderer.elements.WedgeLineElement;
-import org.openscience.cdk.renderer.elements.WedgeLineElement.Direction;
 import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
-import org.openscience.cdk.renderer.generators.BasicAtomGenerator.CompactAtom;
 import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameter;
 
 /**
@@ -72,7 +68,7 @@ public class SmartcypGenerator implements IGenerator<IAtomContainer> {
 	public static class AtomMap extends
 	AbstractGeneratorParameter<Map<Integer, Number>> {
 		public Map<Integer, Number> getDefault() {
-			return Collections.EMPTY_MAP;
+			return Collections.emptyMap();
 		}
 	}
 	private static IGeneratorParameter<Map<Integer, Number>> atomMap = new AtomMap();

@@ -103,7 +103,7 @@ public class GenerateImages {
 			//			iAtomContainer = AtomContainerManipulator.removeHydrogensPreserveMultiplyBonded(iAtomContainer);
 
 			// Generate 2D coordinates for moleculeKU
-			iAtomContainer = this.generate2Dcoordinates(iAtomContainer);
+			iAtomContainer = GenerateImages.generate2Dcoordinates(iAtomContainer);
 
 			//String id = moleculeSet.getMolecule(moleculeIndex).getID();
 			// System.out.println(id);

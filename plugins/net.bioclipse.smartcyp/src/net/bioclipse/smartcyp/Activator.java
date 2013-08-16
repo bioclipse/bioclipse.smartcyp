@@ -30,8 +30,8 @@ public class Activator extends AbstractUIPlugin {
     private static Activator plugin;
 
     // Trackers for getting the managers
-    private ServiceTracker javaFinderTracker;
-    private ServiceTracker jsFinderTracker;
+    private ServiceTracker<IJavaSmartcypManager, IJavaSmartcypManager> javaFinderTracker;
+    private ServiceTracker<IJavaScriptSmartcypManager, IJavaScriptSmartcypManager> jsFinderTracker;
 
     public Activator() {
     }
@@ -40,13 +40,13 @@ public class Activator extends AbstractUIPlugin {
         super.start(context);
         plugin = this;
         javaFinderTracker
-            = new ServiceTracker( context,
+            = new ServiceTracker<IJavaSmartcypManager, IJavaSmartcypManager>( context,
                                   IJavaSmartcypManager.class.getName(),
                                   null );
 
         javaFinderTracker.open();
         jsFinderTracker
-            = new ServiceTracker( context,
+            = new ServiceTracker<IJavaScriptSmartcypManager, IJavaScriptSmartcypManager>( context,
                                   IJavaScriptSmartcypManager.class.getName(),
                                   null );
 
