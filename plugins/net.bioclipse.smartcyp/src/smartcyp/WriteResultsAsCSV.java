@@ -34,7 +34,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 
 import smartcyp.MoleculeKU.SMARTCYP_PROPERTY;
 
@@ -73,7 +73,7 @@ public class WriteResultsAsCSV {
 
 
 
-    public void writeCSV( IMoleculeSet moleculeSet ) {
+    public void writeCSV( IAtomContainerSet moleculeSet ) {
 		
 		if (OutputFile=="") OutputFile = "SMARTCyp_Results_" + this.dateAndTime;
 
@@ -90,10 +90,10 @@ public class WriteResultsAsCSV {
 
 
 		// Iterate MoleculKUs
-		for (int moleculeIndex=0; moleculeIndex < moleculeSet.getMoleculeCount(); moleculeIndex++) {
+		for (int moleculeIndex=0; moleculeIndex < moleculeSet.getAtomContainerCount(); moleculeIndex++) {
 
 			// Set variables
-			MoleculeKU moleculeKU = (MoleculeKU) moleculeSet.getMolecule(moleculeIndex);
+			MoleculeKU moleculeKU = (MoleculeKU) moleculeSet.getAtomContainer(moleculeIndex);
 			moleculeID = moleculeKU.getID();
 
 			// Iterate Atoms

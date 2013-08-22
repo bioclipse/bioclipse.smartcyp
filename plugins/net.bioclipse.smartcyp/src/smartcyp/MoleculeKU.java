@@ -37,10 +37,10 @@ import org.openscience.cdk.graph.invariant.EquivalentClassPartitioner;
 import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.silent.Molecule;
+import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 
-public class MoleculeKU extends Molecule{
+public class MoleculeKU extends AtomContainer {
 
 	
 	public enum SMARTCYP_PROPERTY {
@@ -171,7 +171,7 @@ public class MoleculeKU extends Molecule{
 		Iterator<String> keySetIteratorSMARTSnEnergies = keySetSMARTSnEnergies.iterator();
 
 		String currentSMARTS = "C";
-		SMARTSQueryTool querytool = new SMARTSQueryTool(currentSMARTS);					// Creates the Query Tool
+		SMARTSQueryTool querytool = new SMARTSQueryTool(currentSMARTS,getBuilder());					// Creates the Query Tool
 
 
 		while(keySetIteratorSMARTSnEnergies.hasNext()){
@@ -433,7 +433,7 @@ public class MoleculeKU extends Molecule{
 		*/ //end old matching 2.0
 		
 		for (String currentSMARTS : SMARTSstrings){
-			SMARTSQueryTool querytool = new SMARTSQueryTool(currentSMARTS);		// Creates the Query Tool
+			SMARTSQueryTool querytool = new SMARTSQueryTool(currentSMARTS,getBuilder());		// Creates the Query Tool
 	
 			querytool.setSmarts(currentSMARTS);
 	
@@ -503,7 +503,7 @@ public class MoleculeKU extends Molecule{
 		
 
 		for (String currentSMARTS : SMARTSstrings){
-			SMARTSQueryTool querytool = new SMARTSQueryTool(currentSMARTS);		// Creates the Query Tool
+			SMARTSQueryTool querytool = new SMARTSQueryTool(currentSMARTS,getBuilder());		// Creates the Query Tool
 			
 			querytool.setSmarts(currentSMARTS);
 			
