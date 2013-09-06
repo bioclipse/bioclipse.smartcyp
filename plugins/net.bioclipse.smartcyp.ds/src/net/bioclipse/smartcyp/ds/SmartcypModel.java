@@ -3,6 +3,7 @@ package net.bioclipse.smartcyp.ds;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.openscience.cdk.interfaces.IAtom;
 
@@ -35,6 +36,7 @@ public class SmartcypModel extends AbstractDSTest implements IDSTest {
 		try {
 			retmol = smartcyp.predictSOM(cdkmol);
 		} catch (Exception e) {
+            Logger.getLogger( SmartcypModel.class ).error( e.getMessage(), e );
 			return returnError("Error running smartcyp", e.getMessage());
 		}
 //		if (retmol==null)
